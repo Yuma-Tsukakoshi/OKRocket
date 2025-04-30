@@ -1,0 +1,57 @@
+@startuml
+title OKRocket ユースケース図
+left to right direction
+
+skinparam rectangle {
+  BackgroundColor #5941a9
+  FontColor #ffffff
+}
+skinparam frame {
+  BackgroundColor #7a7adb
+  FontColor #ffffff
+}
+
+actor "ユーザー" as UserReader
+actor "個人ユーザ" as User
+actor "チームリーダー" as Reader
+
+User --|> UserReader
+Reader --|> UserReader
+
+package "OKRocket" {
+  frame "共通ユースケース" as commonUsecase {
+    usecase "目標を一覧表示する(GET)"
+    usecase "目標を登録する(POST)"
+    usecase "目標を変更する(PUT)"
+    usecase "目標を削除する(DELETE)"
+
+    usecase "成果指標を一覧表示する(GET)"
+    usecase "成果指標を登録する(POST)"
+    usecase "成果指標を変更する(PUT)"
+    
+    usecase "進捗率を表示する(GET)"
+    
+    frame "外部サービスusecase" as externalUsecase {
+      usecase "目標の進捗をSlackに通知する"
+      usecase "Google Calendarにタスクを登録する"
+      usecase "Slackにリマインドの設定を行う"
+      usecase "SlackからOKRocketにメッセージを送信する"
+    }
+  }
+
+  frame "チームusecase" as teamUsecase {
+    usecase "チーム目標を一覧表示する(GET)"
+    usecase "チーム目標を登録する(POST)"
+    usecase "チーム目標を変更する(PUT)"
+    usecase "チーム目標を削除する(DELETE)"
+    usecase "チームの進捗を確認する"
+  }
+
+}
+
+
+UserReader --> commonUsecase
+Reader --> teamUsecase
+
+
+@enduml
