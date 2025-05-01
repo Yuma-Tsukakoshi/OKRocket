@@ -22,6 +22,11 @@ User --|> UserReader
 Admin --|> UserReader
 
 package "OKRocket" {
+  package "認証"{
+    usecase "ログインする" as login
+    usecase "ログアウトする" as logout
+  }
+
   package "個人目標ユースケース" {
     usecase "個人目標を登録する" as createObjective
     usecase "個人目標を一覧表示する" as listObjectives
@@ -29,11 +34,6 @@ package "OKRocket" {
     usecase "個人目標を削除する" as deleteObjective
 
     usecase "進捗率を取得する" as getProgressRate
-
-    usecase "ログインする" as login
-    usecase "ログアウトする" as logout
-    usecase "ユーザー情報を取得する" as getUserInfo
-    usecase "ユーザー情報を更新する" as updateUserInfo
   }
 
   package "チーム管理ユースケース" {
@@ -73,11 +73,19 @@ package "OKRocket" {
   }
 }
 
+UserReader --> login
+UserReader --> logout
 UserReader --> createObjective
 UserReader --> listObjectives
 UserReader --> updateObjective
 UserReader --> deleteObjective
 UserReader --> getProgressRate
+
+UserReader --> registerImprovementCycle
+UserReader --> generateGakuchikaWithMile
+UserReader --> declareGoalToEarnMile
+UserReader --> commentOnGoalToEarnMile
+UserReader --> achieveGoalToEarnMile
 
 Admin --> createTeamObjective
 Admin --> listTeamObjectives
@@ -86,6 +94,10 @@ Admin --> deleteTeamObjective
 Admin --> getTeamProgressRate
 Admin --> addTeamMember
 Admin --> removeTeamMember
+Admin --> createTeam
+Admin --> listTeams
+Admin --> updateTeam
+Admin --> deleteTeam
 
 UserReader --> notifyProgressToSlack
 UserReader --> registerTaskToGoogleCalendar
