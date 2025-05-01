@@ -1,57 +1,109 @@
 @startuml
 title OKRocket ユースケース図
+
 left to right direction
 
-skinparam rectangle {
-  BackgroundColor #5941a9
-  FontColor #ffffff
+skinparam usecase {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
 }
-skinparam frame {
-  BackgroundColor #7a7adb
-  FontColor #ffffff
+skinparam package {
+  BackgroundColor #ffffff
+  BorderColor #5941a9
 }
 
 actor "ユーザー" as UserReader
+actor "チームリーダー" as Admin
 actor "個人ユーザ" as User
-actor "チームリーダー" as Reader
 
 User --|> UserReader
-Reader --|> UserReader
+Admin --|> UserReader
 
 package "OKRocket" {
-  frame "共通ユースケース" as commonUsecase {
-    usecase "目標を一覧表示する(GET)"
-    usecase "目標を登録する(POST)"
-    usecase "目標を変更する(PUT)"
-    usecase "目標を削除する(DELETE)"
+  package "個人目標ユースケース" {
+    usecase "個人目標を登録する" as createObjective
+    usecase "個人目標を一覧表示する" as listObjectives
+    usecase "個人目標を更新する" as updateObjective
+    usecase "個人目標を削除する" as deleteObjective
 
-    usecase "成果指標を一覧表示する(GET)"
-    usecase "成果指標を登録する(POST)"
-    usecase "成果指標を変更する(PUT)"
-    
-    usecase "進捗率を表示する(GET)"
-    
-    frame "外部サービスusecase" as externalUsecase {
-      usecase "目標の進捗をSlackに通知する"
-      usecase "Google Calendarにタスクを登録する"
-      usecase "Slackにリマインドの設定を行う"
-      usecase "SlackからOKRocketにメッセージを送信する"
+    usecase "進捗率を取得する" as getProgressRate
+
+    usecase "ログインする" as login
+    usecase "ログアウトする" as logout
+    usecase "ユーザー情報を取得する" as getUserInfo
+    usecase "ユーザー情報を更新する" as updateUserInfo
+  }
+
+  package "チーム管理ユースケース" {
+    usecase "チームを登録する" as createTeam
+    usecase "チームを一覧表示する" as listTeams
+    usecase "チームを更新する" as updateTeam
+    usecase "チームを削除する" as deleteTeam
+      
+    usecase "チームメンバーを追加する" as addTeamMember
+    usecase "チームメンバーを削除する" as removeTeamMember
+  }
+
+  package "成長支援ユースケース" {
+    usecase "振り返りを行う" as registerImprovementCycle
+    usecase "マイルでガクチカを生成する" as generateGakuchikaWithMile
+
+    frame "マイル獲得ユースケース" {
+      usecase "目標を宣言した際にマイルを獲得する" as declareGoalToEarnMile
+      usecase "他人の目標にコメント時にマイルを獲得する" as commentOnGoalToEarnMile
+      usecase "目標を達成時にマイルを獲得する" as achieveGoalToEarnMile
     }
   }
 
-  frame "チームusecase" as teamUsecase {
-    usecase "チーム目標を一覧表示する(GET)"
-    usecase "チーム目標を登録する(POST)"
-    usecase "チーム目標を変更する(PUT)"
-    usecase "チーム目標を削除する(DELETE)"
-    usecase "チームの進捗を確認する"
+  package "チーム目標ユースケース" {
+    usecase "チーム目標を登録する" as createTeamObjective
+    usecase "チーム目標を一覧表示する" as listTeamObjectives
+    usecase "チーム目標を更新する" as updateTeamObjective
+    usecase "チーム目標を削除する" as deleteTeamObjective
+    usecase "チームの進捗を確認する" as getTeamProgressRate
   }
 
+  package "外部連携ユースケース" {
+    usecase "Slackに目標進捗を通知する" as notifyProgressToSlack
+    usecase "Googleカレンダーにタスクを登録する" as registerTaskToGoogleCalendar
+    usecase "Slackにリマインドを設定する" as setSlackReminder
+    usecase "Slackからメッセージを受け取る" as receiveMessageFromSlack
+  }
 }
 
+UserReader --> createObjective
+UserReader --> listObjectives
+UserReader --> updateObjective
+UserReader --> deleteObjective
+UserReader --> getProgressRate
 
-UserReader --> commonUsecase
-Reader --> teamUsecase
+Admin --> createTeamObjective
+Admin --> listTeamObjectives
+Admin --> updateTeamObjective
+Admin --> deleteTeamObjective
+Admin --> getTeamProgressRate
+Admin --> addTeamMember
+Admin --> removeTeamMember
 
+UserReader --> notifyProgressToSlack
+UserReader --> registerTaskToGoogleCalendar
+UserReader --> setSlackReminder
+receiveMessageFromSlack --> UserReader
+
+rectangle "今後のユースケース案" as futureUseCases
+note bottom of futureUseCases
+  目標→課題→解決→振り返りの継続的な改善サイクルを回せるようになりたい
+  マイルと交換して、レポートを作成する
+  マイルを貯める方法：
+  - 目標を宣言する
+  - 他人の目標にコメントする
+  - 目標を達成する
+endnote
+
+note bottom of OKRocket
+  目標設定には、成果指標も含まれる
+endnote
 
 @enduml
