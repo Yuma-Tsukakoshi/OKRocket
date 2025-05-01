@@ -1,0 +1,45 @@
+@startuml
+title OKRocket システム関連図
+left to right direction
+
+
+skinparam rectangle {
+  BackgroundColor<<System>> #5941a9
+  FontColor<<System>> #ffffff
+}
+skinparam frame {
+  BackgroundColor<<External>> #7a7adb
+  FontColor<<External>> #ffffff
+}
+
+actor "個人ユーザ" as User
+actor "チームリーダー" as Reader
+
+rectangle "OKRocket（目標管理アプリ）" <<System>> as OKRocket
+
+frame "外部サービス(拡張予定)" <<External>> as ExternalService {
+  rectangle "Google Calendar" as GoogleCalendar
+  rectangle "Slack" as Slack
+  rectangle "Discord" as Discord
+}
+
+User --> OKRocket
+note right of User
+  - 目標を登録・一覧表示
+  - 成果指標を登録
+  - 進捗率を更新
+end note
+
+Reader --> OKRocket
+note right of Reader
+  - チーム目標を登録・確認
+  - チームの進捗を確認
+end note
+
+OKRocket --> ExternalService
+note bottom of ExternalService
+  - 目標の進捗をSlackに通知
+  - SlackからOKRocketにメッセージを送信
+end note
+
+@enduml
