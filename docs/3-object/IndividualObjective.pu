@@ -1,0 +1,89 @@
+@startuml
+title OKRocket オブジェクト図
+
+left to right direction
+
+skinparam usecase {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+skinparam package {
+  BackgroundColor #ffffff
+  BorderColor #5941a9
+}
+
+
+object "個人ユーザ" as User {
+  ID= 1
+  Name= "山田太郎"
+  Objectelive = [
+    "英語を話せるようになる",
+    "プログラミングを学ぶ"
+  ],
+  Mile= 1000
+  Team = [
+    "チームA",
+    "チームB"
+  ]
+  gakutika = [
+    "英語を話せるようになる",
+    "プログラミングを学ぶ"
+  ]
+}
+
+object "目標" as Objective {
+  ID= 1
+  Title= "英語を話せるようになる"
+  Description= "TOEICで800点を取る"
+  StartDate= "2023-01-01"
+  EndDate= "2023-12-31"
+  Status= "進行中"
+  Comment= [
+    "頑張ってください！",
+    "応援しています！"
+  ]
+}
+note right of Objective
+  目標というエンティティは1つで良いのか？
+  team_idをoptionalで持たせてチーム目標なのか個人目標なのかを区別する
+  user_idも持たせる必要があるので、フラグを別で持たせる必要がありそう
+  → 個人かチームかで分けることができたので、idの意味合いが変わると思うが、同じプロパティ名で振る舞いを変えるのはバグの原因になりそう
+end note
+
+note right of Objective
+  進捗率はどのように計測するのか？
+end note
+
+object "コメント" as Comment {
+  ID= 1
+  Content= "頑張ってください！"
+  CreatedAt= "2023-01-01"
+}
+
+object "ステータス" as Status {
+  ID= 1
+  Name= "進行中"
+}
+
+object "チーム" as Team {
+  ID= 1
+  Name= "チームA"
+}
+
+object "ガクチカ" as Gakutika {
+  ID= 1
+  Title= "英語を話せるようになる"
+  Description= "TOEICで800点を取る"
+}
+
+
+
+User *-- Objective : "個人ユーザは目標を複数持つ"
+Status -down- Objective : "目標はステータスを持つ"
+User *--* Team : "個人ユーザはチームに所属する"
+Objective *-- Comment : "目標はコメントを持つ"
+
+
+@enduml

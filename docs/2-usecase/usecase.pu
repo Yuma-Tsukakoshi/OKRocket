@@ -27,7 +27,7 @@ package "OKRocket" {
     usecase "ログアウトする" as logout
   }
 
-  package "個人目標ユースケース" {
+  package "個人目標ユースケース" as IndividualObjective {
     usecase "個人目標を登録する" as createObjective
     usecase "個人目標を一覧表示する" as listObjectives
     usecase "個人目標を更新する" as updateObjective
@@ -36,7 +36,7 @@ package "OKRocket" {
     usecase "進捗率を取得する" as getProgressRate
   }
 
-  package "チーム管理ユースケース" {
+  package "チーム管理ユースケース" as TeamManagement {
     usecase "チームを登録する" as createTeam
     usecase "チームを一覧表示する" as listTeams
     usecase "チームを更新する" as updateTeam
@@ -46,18 +46,18 @@ package "OKRocket" {
     usecase "チームメンバーを削除する" as removeTeamMember
   }
 
-  package "成長支援ユースケース" {
+  package "成長支援ユースケース" as GrowthSupport {
     usecase "振り返りを行う" as registerImprovementCycle
     usecase "マイルでガクチカを生成する" as generateGakuchikaWithMile
 
-    frame "マイル獲得ユースケース" {
+    frame "マイル獲得ユースケース"  as EarnMile {
       usecase "目標を宣言した際にマイルを獲得する" as declareGoalToEarnMile
       usecase "他人の目標にコメント時にマイルを獲得する" as commentOnGoalToEarnMile
       usecase "目標を達成時にマイルを獲得する" as achieveGoalToEarnMile
     }
   }
 
-  package "チーム目標ユースケース" {
+  package "チーム目標ユースケース" as TeamObjective {
     usecase "チーム目標を登録する" as createTeamObjective
     usecase "チーム目標を一覧表示する" as listTeamObjectives
     usecase "チーム目標を更新する" as updateTeamObjective
@@ -65,7 +65,7 @@ package "OKRocket" {
     usecase "チームの進捗を確認する" as getTeamProgressRate
   }
 
-  package "外部連携ユースケース" {
+  package "外部連携ユースケース" as ExternalIntegration {
     usecase "Slackに目標進捗を通知する" as notifyProgressToSlack
     usecase "Googleカレンダーにタスクを登録する" as registerTaskToGoogleCalendar
     usecase "Slackにリマインドを設定する" as setSlackReminder
