@@ -3,87 +3,90 @@ title OKRocket オブジェクト図
 
 left to right direction
 
-skinparam usecase {
+skinparam object {
   BackgroundColor #ffffff
   BorderColor #7a7adb
   FontColor #000000
   BorderThickness 2
 }
-skinparam package {
-  BackgroundColor #ffffff
-  BorderColor #5941a9
+
+object "(ユーザー)" as User {
+  名前 = "山田太郎"
+  大学 = "山田大学"
+  学部 = "情報学部"
+  学年 = 3
+  誕生日 =2022/01/01
+  合計マイル数 = 1000
 }
 
-
-object "個人ユーザ" as User {
-  ID= 1
-  Name= "山田太郎"
-  Objectelive = [
-    "英語を話せるようになる",
-    "プログラミングを学ぶ"
-  ],
-  Mile= 1000
-  Team = [
-    "チームA",
-    "チームB"
-  ]
-  gakutika = [
-    "英語を話せるようになる",
-    "プログラミングを学ぶ"
-  ]
+object "(目標)" as Objective {
+  タイトル = "英語を話せるようになる"
+  説明 = "TOEICで800点を取る"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+  ステータス = "進行中"
 }
 
-object "目標" as Objective {
-  ID= 1
-  Title= "英語を話せるようになる"
-  Description= "TOEICで800点を取る"
-  StartDate= "2023-01-01"
-  EndDate= "2023-12-31"
-  Status= "進行中"
-  Comment= [
-    "頑張ってください！",
-    "応援しています！"
-  ]
+object "(個人成果指標)" as KeyResult {
+  説明 = "毎週100単語覚える"
+  進捗率 = 60
 }
-note right of Objective
-  目標というエンティティは1つで良いのか？
-  team_idをoptionalで持たせてチーム目標なのか個人目標なのかを区別する
-  user_idも持たせる必要があるので、フラグを別で持たせる必要がありそう
-  → 個人かチームかで分けることができたので、idの意味合いが変わると思うが、同じプロパティ名で振る舞いを変えるのはバグの原因になりそう
+
+object "(チーム成果指標)" as TeamKeyResult {
+  説明 = "毎週100単語覚える"
+  進捗率 = 60
+}
+
+object "(個人振り返り)" as Reflection {
+  タイトル = "英語力向上"
+  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+}
+object "(チーム振り返り)" as TeamReflection {
+  タイトル = "英語力向上"
+  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+}
+
+object "(ガクチカ)" as Gakutika {
+  Title = "英語力向上"
+  Description = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+}
+note left of Gakutika
+  ガクチカは、目標の進捗率が100%になる&
+  振り返りが書かれている時に生成できるようになる
+  →それまではdisabled
 end note
 
-note right of Objective
-  進捗率はどのように計測するのか？
+
+object "(チーム)" as Team {
+  Name = "チームA"
+}
+
+object "(チーム目標)" as TeamObjective {
+  Title = "チームで技術ブログを書く"
+  Status = "未開始"
+}
+
+object "(ステータス)" as Status {
+  Name = "進行中"
+}
+
+User *-up- Objective : "目標を複数持つ"
+Objective *- KeyResult : "目標は成果指標を複数持つ"
+Objective -left- Reflection : "目標は振り返りを持つ"
+
+Objective --> Gakutika : "目標からガクチカが生成される"
+TeamObjective --> Gakutika : "目標からガクチカが生成される"
+
+User *--* Team : "ユーザーはチームに所属する"
+TeamObjective *-  TeamKeyResult : "目標は成果指標を複数持つ"
+TeamObjective -* Team : "チームは目標を持つ"
+TeamObjective -left- TeamReflection : "チームは振り返りを持つ"
+
+
+note bottom of User
+  個人とチームでは、利用するメソッドであったりロジックが似ている部分が多い
+  エンティティは分割するが、ロジックは共通化したい
 end note
-
-object "コメント" as Comment {
-  ID= 1
-  Content= "頑張ってください！"
-  CreatedAt= "2023-01-01"
-}
-
-object "ステータス" as Status {
-  ID= 1
-  Name= "進行中"
-}
-
-object "チーム" as Team {
-  ID= 1
-  Name= "チームA"
-}
-
-object "ガクチカ" as Gakutika {
-  ID= 1
-  Title= "英語を話せるようになる"
-  Description= "TOEICで800点を取る"
-}
-
-
-
-User *-- Objective : "個人ユーザは目標を複数持つ"
-Status -down- Objective : "目標はステータスを持つ"
-User *--* Team : "個人ユーザはチームに所属する"
-Objective *-- Comment : "目標はコメントを持つ"
 
 
 @enduml
