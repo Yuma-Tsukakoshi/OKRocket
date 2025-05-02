@@ -1,5 +1,5 @@
 @startuml
-title OKRocket ユースケース図
+title OKRocket ユースケース図（修正版）
 
 left to right direction
 
@@ -22,7 +22,7 @@ User --|> UserReader
 Admin --|> UserReader
 
 package "OKRocket" {
-  package "認証"{
+  package "認証" {
     usecase "ログインする" as login
     usecase "ログアウトする" as logout
   }
@@ -32,8 +32,13 @@ package "OKRocket" {
     usecase "個人目標を一覧表示する" as listObjectives
     usecase "個人目標を更新する" as updateObjective
     usecase "個人目標を削除する" as deleteObjective
-
     usecase "進捗率を取得する" as getProgressRate
+  }
+
+  package "成果指標ユースケース" {
+    usecase "成果指標を登録する" as createKeyResult
+    usecase "成果指標を一覧表示する" as listKeyResults
+    usecase "成果指標を更新する" as updateKeyResult
   }
 
   package "チーム管理ユースケース" {
@@ -41,20 +46,19 @@ package "OKRocket" {
     usecase "チームを一覧表示する" as listTeams
     usecase "チームを更新する" as updateTeam
     usecase "チームを削除する" as deleteTeam
-      
     usecase "チームメンバーを追加する" as addTeamMember
     usecase "チームメンバーを削除する" as removeTeamMember
   }
 
   package "成長支援ユースケース" {
-    usecase "振り返りを行う" as registerImprovementCycle
-    usecase "マイルでガクチカを生成する" as generateGakuchikaWithMile
+    usecase "ガクチカを生成する" as generateGakuchikaWithMile
+  }
 
-    frame "マイル獲得ユースケース" {
-      usecase "目標を宣言した際にマイルを獲得する" as declareGoalToEarnMile
-      usecase "他人の目標にコメント時にマイルを獲得する" as commentOnGoalToEarnMile
-      usecase "目標を達成時にマイルを獲得する" as achieveGoalToEarnMile
-    }
+  package "振り返りユースケース" {
+    usecase "振り返りを作成する" as createReflection
+    usecase "振り返りを一覧表示する" as listReflections
+    usecase "振り返りを更新する" as updateReflection
+    usecase "振り返りを削除する" as deleteReflection
   }
 
   package "チーム目標ユースケース" {
@@ -66,10 +70,10 @@ package "OKRocket" {
   }
 
   package "外部連携ユースケース" {
-    usecase "Slackに目標進捗を通知する" as notifyProgressToSlack
-    usecase "Googleカレンダーにタスクを登録する" as registerTaskToGoogleCalendar
-    usecase "Slackにリマインドを設定する" as setSlackReminder
-    usecase "Slackからメッセージを受け取る" as receiveMessageFromSlack
+    usecase "Slackに進捗を通知" as notifyProgressToSlack
+    usecase "Googleカレンダーに登録" as registerTaskToGoogleCalendar
+    usecase "Slackにリマインド設定" as setSlackReminder
+    usecase "Slackからメッセージ受信" as receiveMessageFromSlack
   }
 }
 
@@ -81,11 +85,14 @@ UserReader --> updateObjective
 UserReader --> deleteObjective
 UserReader --> getProgressRate
 
-UserReader --> registerImprovementCycle
+UserReader --> createKeyResult
+UserReader --> listKeyResults
+UserReader --> updateKeyResult
 UserReader --> generateGakuchikaWithMile
-UserReader --> declareGoalToEarnMile
-UserReader --> commentOnGoalToEarnMile
-UserReader --> achieveGoalToEarnMile
+UserReader --> createReflection
+UserReader --> listReflections
+UserReader --> updateReflection
+UserReader --> deleteReflection
 
 Admin --> createTeamObjective
 Admin --> listTeamObjectives
@@ -103,19 +110,5 @@ UserReader --> notifyProgressToSlack
 UserReader --> registerTaskToGoogleCalendar
 UserReader --> setSlackReminder
 receiveMessageFromSlack --> UserReader
-
-rectangle "今後のユースケース案" as futureUseCases
-note bottom of futureUseCases
-  目標→課題→解決→振り返りの継続的な改善サイクルを回せるようになりたい
-  マイルと交換して、レポートを作成する
-  マイルを貯める方法：
-  - 目標を宣言する
-  - 他人の目標にコメントする
-  - 目標を達成する
-endnote
-
-note bottom of OKRocket
-  目標設定には、成果指標も含まれる
-endnote
 
 @enduml

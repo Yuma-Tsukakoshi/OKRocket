@@ -1,0 +1,91 @@
+@startuml
+title OKRocket オブジェクト図
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+object "(ユーザー)" as User {
+  名前 = "山田太郎"
+  大学 = "山田大学"
+  学部 = "情報学部"
+  学年 = 3
+  誕生日 =2022/01/01
+  合計マイル数 = 1000
+}
+
+object "(目標)" as Objective {
+  タイトル = "英語を話せるようになる"
+  説明 = "TOEICで800点を取る"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+  ステータス = "進行中"
+}
+
+object "(個人成果指標)" as KeyResult {
+  説明 = "毎週100単語覚える"
+  進捗率 = 60
+}
+
+object "(チーム成果指標)" as TeamKeyResult {
+  説明 = "毎週100単語覚える"
+  進捗率 = 60
+}
+
+object "(個人振り返り)" as Reflection {
+  タイトル = "英語力向上"
+  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+}
+object "(チーム振り返り)" as TeamReflection {
+  タイトル = "英語力向上"
+  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+}
+
+object "(ガクチカ)" as Gakutika {
+  Title = "英語力向上"
+  Description = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+}
+note bottom of Gakutika
+  ガクチカは、目標の進捗率が100%になる&
+  振り返りが書かれている時に生成できるようになる
+  →それまではdisabled
+end note
+
+
+object "(チーム)" as Team {
+  Name = "チームA"
+  Description = "チームの説明"
+}
+
+object "(チーム目標)" as TeamObjective {
+  Title = "チームで技術ブログを書く"
+  Status = "未開始"
+}
+
+object "(ステータス)" as Status {
+  Name = "進行中"
+}
+
+User *--* Team : "ユーザーはチームに所属する"
+
+Objective -up-* User : "目標を複数持つ"
+Objective *- KeyResult : "目標は成果指標を複数持つ"
+Objective -left- Reflection : "目標は振り返りを持つ"
+
+TeamObjective -* Team : "チームは目標を持つ"
+TeamObjective *-  TeamKeyResult : "目標は成果指標を複数持つ"
+TeamObjective -left- TeamReflection : "チームは振り返りを持つ"
+
+Objective --> Gakutika : "目標からガクチカが生成される"
+TeamObjective --> Gakutika : "目標からガクチカが生成される"
+
+Status --> TeamObjective
+Status --> Objective
+
+
+@enduml
