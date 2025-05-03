@@ -1,5 +1,5 @@
 @startuml
-title OKRocket オブジェクト図
+title OKRocket PersonalObjectiveUsecase オブジェクト図
 
 left to right direction
 
@@ -18,45 +18,87 @@ object "(ユーザー)" as User {
   誕生日 =2022/01/01
 }
 
-object "(目標)" as Objective {
-  タイトル = "英語を話せるようになる"
-  説明 = "TOEICで800点を取る"
-  開始日 = "2023-01-01"
-  終了日 = "2023-12-31"
+
+frame "個人目標1" as ObjectiveFrame1 {
+  object "(目標)" as Objective1 {
+    タイトル = "英語を話せるようになる"
+    説明 = "TOEICで800点を取る"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
+  }
+
+  object "(個人振り返り)" as Reflection1 {
+    タイトル = "英語力向上"
+    説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+  }
+
+  object "(ガクチカ)" as Gakutika1 {
+    タイトル = "英語力向上"
+    説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+  }
+
+  object "(個人成果指標)" as KeyResult1 {
+    説明 = 毎週100単語覚える
+  }
 }
 
-object "(個人成果指標)" as KeyResult {
-  説明 = "毎週100単語覚える"
-}
+frame "個人目標2" as ObjectiveFrame2 {
+  object "(目標)" as Objective2 {
+    タイトル = "英語を話せるようになる"
+    説明 = "TOEICで800点を取る"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
+  }
 
-object "(個人振り返り)" as Reflection {
-  タイトル = "英語力向上"
-  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
-}
+  object "(個人振り返り)" as Reflection2 {
+    タイトル = ""
+    説明 = ""
+  }
 
-object "(ガクチカ)" as Gakutika {
-  タイトル = "英語力向上"
-  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+  object "(ガクチカ)" as Gakutika2 {
+    タイトル = ""
+    説明 = ""
+  }
+
+  object "(個人成果指標)" as KeyResult2 {
+    説明 = 毎週100単語覚える
+  }
 }
-note bottom of Gakutika
-  ガクチカは、目標の進捗率が100%になる&
-  振り返りが書かれている時に生成できるようになる
-  →それまではdisabled
-end note
 
 
 object "(ステータス)" as Status {
   名前 = "進行中"
 }
+Status - KeyResult1 : includes >
+note left of KeyResult1
+  ステータスを管理: 未着手/進行中/完了 (VO)
+end note
 
-User *--* Team : "ユーザーはチームに所属する"
+Status - Objective1 : includes >
+note right of Objective1
+  成果指標タスクに合わせてステータス変化
+  - 全て未着手 or 成果指標がない: 未着手
+  - 1つ以上進行中: 進行中
+  - 全て完了: 完了
+end note
 
-Objective -up-* User : "目標を複数持つ"
-Objective *- KeyResult : "目標は成果指標を複数持つ"
-Objective -left- Reflection : "目標は振り返りを持つ"
+Objective1 -down- User
+Objective2 -down- User
 
-Objective --> Gakutika : "目標からガクチカが生成される"
-Status --> Objective
+Objective1 "1" *-up- "*"  KeyResult1
+Objective1 "1" o---"0..1" Reflection1
+Objective1 "1" <..."0..1" Gakutika1 : uses <
+note right of Gakutika1
+  目標と振り返りから
+  ガクチカが生成される
+end note
 
+Objective2 "1" *-up- "*"  KeyResult2
+Objective2 "1" o---"0..1" Reflection2
+Objective2 "1" <..."0..1" Gakutika2 : uses <
+note right of Gakutika2
+  振り返りがない場合
+  ガクチカは生成されない
+end note
 
 @enduml
