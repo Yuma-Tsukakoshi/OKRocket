@@ -79,8 +79,10 @@ TeamObjective -left- TeamReflection : "チームは振り返りを持つ"
 Objective --> Gakutika : "目標からガクチカが生成される"
 TeamObjective --> Gakutika : "目標からガクチカが生成される"
 
-Status --> TeamObjective
-Status --> Objective
+Status ---> TeamObjective : "チーム目標のステータス"
+Status ---> Objective : "個人目標のステータス"
+Status ---> KeyResult : "個人成果指標のステータス"
+Status ---> TeamKeyResult : "チーム成果指標のステータス"
 
 
 @enduml
