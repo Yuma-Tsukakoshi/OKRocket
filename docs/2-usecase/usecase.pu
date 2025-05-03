@@ -108,6 +108,10 @@ UserReader --> createReflection
 UserReader --> listReflections
 UserReader --> updateReflection
 UserReader --> deleteReflection
+UserReader --> NotifyProgress
+UserReader --> SetTaskReminder
+UserReader --> RegisterTaskSchedule
+UserReader --> ReceiveExternalMessage
 
 Admin --> createTeamObjective
 Admin --> listTeamObjectives
@@ -121,9 +125,5 @@ Admin --> listTeams
 Admin --> updateTeam
 Admin --> deleteTeam
 
-UserReader --> notifyProgressToSlack
-UserReader --> registerTaskToGoogleCalendar
-UserReader --> setSlackReminder
-receiveMessageFromSlack --> UserReader
 
 @enduml
