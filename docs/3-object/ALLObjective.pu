@@ -16,7 +16,6 @@ object "(ユーザー)" as User {
   学部 = "情報学部"
   学年 = 3
   誕生日 =2022/01/01
-  合計マイル数 = 1000
 }
 
 object "(目標)" as Objective {
@@ -24,17 +23,14 @@ object "(目標)" as Objective {
   説明 = "TOEICで800点を取る"
   開始日 = "2023-01-01"
   終了日 = "2023-12-31"
-  ステータス = "進行中"
 }
 
 object "(個人成果指標)" as KeyResult {
   説明 = "毎週100単語覚える"
-  進捗率 = 60
 }
 
 object "(チーム成果指標)" as TeamKeyResult {
   説明 = "毎週100単語覚える"
-  進捗率 = 60
 }
 
 object "(個人振り返り)" as Reflection {
@@ -47,8 +43,8 @@ object "(チーム振り返り)" as TeamReflection {
 }
 
 object "(ガクチカ)" as Gakutika {
-  Title = "英語力向上"
-  Description = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+  タイトル = "英語力向上"
+  説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
 }
 note bottom of Gakutika
   ガクチカは、目標の進捗率が100%になる&
@@ -58,17 +54,16 @@ end note
 
 
 object "(チーム)" as Team {
-  Name = "チームA"
-  Description = "チームの説明"
+  名前 = "チームA"
+  説明 = "チームの説明"
 }
 
 object "(チーム目標)" as TeamObjective {
   Title = "チームで技術ブログを書く"
-  Status = "未開始"
 }
 
 object "(ステータス)" as Status {
-  Name = "進行中"
+  名前 = "進行中"
 }
 
 User *--* Team : "ユーザーはチームに所属する"
