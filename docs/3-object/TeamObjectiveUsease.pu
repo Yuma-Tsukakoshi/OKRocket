@@ -1,5 +1,5 @@
 @startuml
-title OKRocket PersonalObjectiveUsecase オブジェクト図
+title OKRocket TeamObjectiveUsecase オブジェクト図
 
 left to right direction
 
@@ -10,16 +10,12 @@ skinparam object {
   BorderThickness 2
 }
 
-object "(ユーザー)" as User {
-  名前 = "山田太郎"
-  大学 = "山田大学"
-  学部 = "情報学部"
-  学年 = 3
-  誕生日 =2022/01/01
+object "(チーム)" as Team {
+  名前 = "チームA"
+  説明 = "チームの説明"
 }
 
-
-frame "個人目標1" as ObjectiveFrame1 {
+frame "チーム目標1" as ObjectiveFrame1 {
   object "(目標)" as Objective1 {
     タイトル = "英語を話せるようになる"
     説明 = "TOEICで800点を取る"
@@ -27,7 +23,7 @@ frame "個人目標1" as ObjectiveFrame1 {
     終了日 = "2023-12-31"
   }
 
-  object "(個人振り返り)" as Reflection1 {
+  object "(チーム振り返り)" as Reflection1 {
     タイトル = "英語力向上"
     説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
   }
@@ -37,12 +33,15 @@ frame "個人目標1" as ObjectiveFrame1 {
     説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
   }
 
-  object "(個人成果指標)" as KeyResult1 {
+  object "(チーム成果指標)" as KeyResult1 {
     説明 = 毎週100単語覚える
+    アサイン = "山田太郎"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
   }
 }
 
-frame "個人目標2" as ObjectiveFrame2 {
+frame "チーム目標2" as ObjectiveFrame2 {
   object "(目標)" as Objective2 {
     タイトル = "英語を話せるようになる"
     説明 = "TOEICで800点を取る"
@@ -50,7 +49,7 @@ frame "個人目標2" as ObjectiveFrame2 {
     終了日 = "2023-12-31"
   }
 
-  object "(個人振り返り)" as Reflection2 {
+  object "(チーム振り返り)" as Reflection2 {
     タイトル = ""
     説明 = ""
   }
@@ -60,8 +59,9 @@ frame "個人目標2" as ObjectiveFrame2 {
     説明 = ""
   }
 
-  object "(個人成果指標)" as KeyResult2 {
+  object "(チーム成果指標)" as KeyResult2 {
     説明 = 毎週100単語覚える
+    アサイン = "山田太郎"
     開始日 = "2023-01-01"
     終了日 = "2023-12-31"
   }
@@ -74,7 +74,12 @@ object "(ステータス)" as Status {
 Status - KeyResult1 : includes >
 note left of KeyResult1
   ステータスを管理: 未着手/進行中/完了/期限超過 (VO)
+
+  チーム目標の中でアサインが入っているものは、
+  個人目標一覧の方にも反映されるような設計にする
 end note
+
+
 
 Status - Objective1 : includes >
 note right of Objective1
@@ -84,8 +89,8 @@ note right of Objective1
   - 全て完了: 完了
 end note
 
-Objective1 -down- User
-Objective2 -down- User
+Objective1 -down- Team
+Objective2 -down- Team
 
 Objective1 "1" *-up- "*"  KeyResult1
 Objective1 "1" o---"0..1" Reflection1

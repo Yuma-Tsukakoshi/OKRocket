@@ -27,10 +27,15 @@ object "(目標)" as Objective {
 
 object "(個人成果指標)" as KeyResult {
   説明 = "毎週100単語覚える"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
 }
 
 object "(チーム成果指標)" as TeamKeyResult {
   説明 = "毎週100単語覚える"
+  アサイン = "山田太郎"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
 }
 
 object "(個人振り返り)" as Reflection {
