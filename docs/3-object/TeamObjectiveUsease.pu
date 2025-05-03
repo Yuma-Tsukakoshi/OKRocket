@@ -35,7 +35,7 @@ frame "チーム目標1" as ObjectiveFrame1 {
 
   object "(チーム成果指標)" as KeyResult1 {
     説明 = 毎週100単語覚える
-    アサイン = "山田太郎"
+    アサイン = "ユーザ(山田太郎)"
     開始日 = "2023-01-01"
     終了日 = "2023-12-31"
   }
@@ -61,7 +61,7 @@ frame "チーム目標2" as ObjectiveFrame2 {
 
   object "(チーム成果指標)" as KeyResult2 {
     説明 = 毎週100単語覚える
-    アサイン = "山田太郎"
+    アサイン = "ユーザ(山田太郎)"
     開始日 = "2023-01-01"
     終了日 = "2023-12-31"
   }
@@ -93,6 +93,14 @@ Objective1 -down- Team
 Objective2 -down- Team
 
 Objective1 "1" *-up- "*"  KeyResult1
+note right of Objective1
+  チーム目標の削除権限はチームリーダーのみ
+end note
+note right of KeyResult1
+  チームの成果指標の編集・削除権限は、所属メンバー全員が可能
+end note
+
+
 Objective1 "1" o---"0..1" Reflection1
 Objective1 "1" <..."0..1" Gakutika1 : uses <
 note right of Gakutika1
