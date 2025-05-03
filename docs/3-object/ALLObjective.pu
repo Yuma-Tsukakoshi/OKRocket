@@ -59,7 +59,7 @@ object "(チーム)" as Team {
 }
 
 object "(チーム目標)" as TeamObjective {
-  Title = "チームで技術ブログを書く"
+  タイトル = "チームで技術ブログを書く"
 }
 
 object "(ステータス)" as Status {
