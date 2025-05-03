@@ -22,7 +22,7 @@ User --|> UserReader
 Admin --|> UserReader
 
 package "OKRocket" {
-  package "認証" {
+  package "認証" as AuthUsecase {
     usecase "ログインする" as login
     usecase "ログアウトする" as logout
   }
