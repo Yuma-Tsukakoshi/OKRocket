@@ -90,8 +90,8 @@ TeamObjective -* Team : "チームは目標を持つ"
 TeamObjective *-  TeamKeyResult : "目標は成果指標を複数持つ"
 TeamObjective -left- TeamReflection : "チームは振り返りを持つ"
 
-Objective --> Gakutika : "目標からガクチカが生成される"
-TeamObjective --> Gakutika : "目標からガクチカが生成される"
+Reflection --> Gakutika : "振り返りからガクチカが生成される"
+TeamReflection --> Gakutika : "振り返りからガクチカが生成される"
 
 Status ---> TeamObjective : "チーム目標のステータス"
 Status ---> Objective : "個人目標のステータス"

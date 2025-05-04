@@ -1,0 +1,52 @@
+@startuml
+title OKRocket ドメインモデル図 - スケジュール管理ユースケース
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+'====== エンティティ ======
+object "個人目標 (PersonalObjective)" as Objective {
+  タイトル (title)
+  説明 (description)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+object "チーム目標 (TeamObjective)" as TeamObjective {
+  タイトル (title)
+  説明 (description)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+object "成果指標 (KeyResult)" as KeyResult {
+  説明 (description)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+object "チーム成果指標 (TeamKeyResult)" as TeamKeyResult {
+  説明 (description)
+  アサイン (assignee)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+'====== 関連（多重度と関係の種類） ======
+Objective "1" *-- "*" KeyResult
+TeamObjective "1" *-- "*" TeamKeyResult
+
+'====== note(ドメインルールの定義) ======
+note right of KeyResult
+  Googleカレンダーに手動で登録可能
+  ※ 成果指標を策定後、登録リンクを表示
+end note
+
+
+@enduml

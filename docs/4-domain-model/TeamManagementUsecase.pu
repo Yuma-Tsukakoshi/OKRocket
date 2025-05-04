@@ -1,0 +1,56 @@
+@startuml
+title OKRocket ドメインモデル図 - チーム管理ユースケース
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+' ===== エンティティ =====
+object "ユーザー (User)" as User {
+  名前 (name)
+  大学 (university)
+  学部 (department)
+  学年 (grade)
+  誕生日 (birthday)
+}
+
+object "チーム (Team)" as Team {
+  名前 (name)
+  説明 (description)
+}
+
+object "役割 (Role)" as Role {
+  名前 (name)
+  説明 (description)
+}
+
+object "所属情報 (TeamMembership)" as TeamMembership {
+  参加日 (joinedAt)
+  役割 (role)
+}
+
+' ===== 関連（多重度と関係の種類） =====
+User "1" -- "*" TeamMembership
+Team "1" -- "*" TeamMembership
+TeamMembership --> Role
+
+'====== note(ドメインルールの定義) ======
+note bottom of Role
+  ● ユーザーの操作権限を制御
+  - Admin > Reader > Member
+  - 権限以下のユースケースを実行できる
+end note
+
+note bottom of User
+  ● 役割が "Admin" の場合：
+    - チームメンバーの追加・削除が可能
+    - チームの登録・編集・削除が可能
+    - 他ユーザーのロール変更が可能
+end note
+
+@enduml

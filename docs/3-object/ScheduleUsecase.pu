@@ -1,5 +1,5 @@
 @startuml
-title OKRocket オブジェクト図
+title OKRocket ScheduleUsecase オブジェクト図
 
 left to right direction
 

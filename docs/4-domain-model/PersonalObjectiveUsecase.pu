@@ -1,0 +1,81 @@
+@startuml
+title OKRocket ドメインモデル図 - 個人目標ユースケース
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+'====== エンティティ ======
+object "ユーザー" as User {
+  名前 (name)
+  大学 (university)
+  学部 (department)
+  学年 (grade)
+  誕生日 (birthday)
+}
+
+frame "目標集約" as ObjectiveFrame {
+  object "目標" as Objective {
+    タイトル (title)
+    説明 (description)
+    開始日 (startDate)
+    終了日 (endDate)
+  }
+
+  object "成果指標" as KeyResult {
+    説明 (description)
+    開始日 (startDate)
+    終了日 (endDate)
+  }
+
+  object "振り返り" as Reflection {
+    タイトル (title)
+    説明 (description)
+  }
+
+  object "ガクチカ" as Gakutika {
+    タイトル (title)
+    説明 (description)
+  }
+}
+
+object "ステータス" as Status {
+  名前 (name)
+}
+
+'====== 関連（多重度と関係の種類） ======
+User "1" *-- "*" Objective
+Objective "1" *-- "*" KeyResult
+Objective "1" o-- "0..1" Reflection 
+KeyResult "1" -- "1" Status
+Objective "1" -- "1" Status
+Reflection "1" <.. "1" Gakutika
+
+note bottom of Status
+  ステータスの種類
+  - 未着手
+  - 進行中
+  - 完了
+  - 期限超過
+end note
+
+'====== note(ドメインルールの定義) ======
+note right of Gakutika
+  ● 生成条件：
+    - ステータスが「完了」
+    - 振り返りが全て入力済み
+  ● 表示：
+    - 個人の場合は個人ページにのみ表示
+  ● 編集：
+    - チーム由来は編集不可
+    - 自分用に複製したものは編集可能
+  ● 削除：
+    - チームのものはチームリーダーが削除可能
+end note
+
+@enduml
