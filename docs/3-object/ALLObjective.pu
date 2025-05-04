@@ -18,6 +18,15 @@ object "(ユーザー)" as User {
   誕生日 =2022/01/01
 }
 
+object "役割" as Role {
+  名前 = "チームリーダー"
+}
+note bottom of Role
+  - メンバー
+  - リーダー
+  - 管理者
+end note
+
 object "(目標)" as Objective {
   タイトル = "英語を話せるようになる"
   説明 = "TOEICで800点を取る"

@@ -14,12 +14,13 @@ skinparam package {
   BorderColor #5941a9
 }
 
+actor "マネージャー" as Admin
 actor "ユーザー" as UserReader
-actor "チームリーダー" as Admin
+actor "チームリーダー" as Reader
 actor "個人ユーザ" as User
 
 User --|> UserReader
-Admin --|> UserReader
+Reader --|> UserReader
 
 package "OKRocket" {
   package "認証" as AuthUsecase {
@@ -117,11 +118,12 @@ UserReader --> SetTaskReminder
 UserReader --> RegisterTaskSchedule
 UserReader --> ReceiveExternalMessage
 
-Admin --> createTeamObjective
-Admin --> listTeamObjectives
-Admin --> updateTeamObjective
-Admin --> deleteTeamObjective
-Admin --> getTeamProgressRate
+Reader --> createTeamObjective
+Reader --> listTeamObjectives
+Reader --> updateTeamObjective
+Reader --> deleteTeamObjective
+Reader --> getTeamProgressRate
+
 Admin --> addTeamMember
 Admin --> removeTeamMember
 Admin --> createTeam
