@@ -1,0 +1,45 @@
+@startuml
+title OKRocket TeamManagementUsecase オブジェクト図
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+object "(ユーザー)" as User {
+  名前 = "山田太郎"
+  大学 = "山田大学"
+  学部 = "情報学部"
+  学年 = 3
+  誕生日 =2022/01/01
+}
+
+object "役割" as Role {
+  名前 = "マネージャー"
+  説明 = "チームの管理を行う役割"
+}
+
+object "(チーム)" as Team {
+  名前 = "チームA"
+  説明 = "チームの説明"
+}
+
+User *--* Team : "ユーザーはチームに所属する"
+User -- Role : "ユーザーは役割を持つ"
+note bottom of Role
+  Roleの権限以下のユースケースを実行できる
+  Admin > Reader > Menber
+end note
+
+note bottom of User
+  [マネージャー]
+  - チームメンバーを追加・削除できる
+  - チームの役割を変更できる
+  - チームの登録・編集・削除ができる
+end note
+
+@enduml

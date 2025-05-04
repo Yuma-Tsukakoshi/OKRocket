@@ -1,0 +1,55 @@
+@startuml
+title OKRocket NotifyUsecase オブジェクト図
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+
+object "(目標)" as Objective {
+  タイトル = "英語を話せるようになる"
+  説明 = "TOEICで800点を取る"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+
+object "(個人成果指標)" as KeyResult {
+  説明 = "毎週100単語覚える"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+
+object "(チーム成果指標)" as TeamKeyResult {
+  説明 = "毎週100単語覚える"
+  アサイン = "山田太郎"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+
+object "(チーム目標)" as TeamObjective {
+  タイトル = "チームで技術ブログを書く"
+}
+
+
+Objective *- KeyResult : "目標は成果指標を複数持つ"
+TeamObjective *-  TeamKeyResult : "目標は成果指標を複数持つ"
+
+
+note bottom of TeamKeyResult
+  ※ 個人目標の方も同様
+  [通知を送る]
+  - slackのチャンネルを選択する
+  - slackのチャンネルを選択したら、slackのチャンネルに通知が送られる
+  [通知タイミング]
+  - 目標が作成された時
+  - 成果指標の開始日
+  - 成果指標の終了日から
+    - 1週間前/3日前/1日前 && ステータスが完了ではない
+end note
+
+@enduml

@@ -1,0 +1,135 @@
+@startuml
+title OKRocket ユースケース図（修正版）
+
+left to right direction
+
+skinparam usecase {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+skinparam package {
+  BackgroundColor #ffffff
+  BorderColor #5941a9
+}
+
+actor "マネージャー" as Admin
+actor "ユーザー" as UserReader
+actor "チームリーダー" as Reader
+actor "個人ユーザ" as User
+
+User --|> UserReader
+Reader --|> UserReader
+
+package "OKRocket" {
+  package "認証" as AuthUsecase {
+    usecase "ログインする" as login
+    usecase "ログアウトする" as logout
+  }
+
+  package "個人目標ユースケース" as PersonalObjectiveUsease {
+    usecase "個人目標を登録する" as createObjective
+    usecase "個人目標を一覧表示する" as listObjectives
+    usecase "個人目標を更新する" as updateObjective
+    usecase "個人目標を削除する" as deleteObjective
+  }
+
+  package "成果指標ユースケース" as KeyResultUsecase {
+    usecase "成果指標を登録する" as createKeyResult
+    usecase "成果指標を一覧表示する" as listKeyResults
+    usecase "成果指標を更新する" as updateKeyResult
+  }
+
+  package "チーム管理ユースケース" as TeamManagementUsecase {
+    usecase "チームを登録する" as createTeam
+    usecase "チームを一覧表示する" as listTeams
+    usecase "チームを更新する" as updateTeam
+    usecase "チームを削除する" as deleteTeam
+    usecase "チームメンバーを追加する" as addTeamMember
+    usecase "チームメンバーを削除する" as removeTeamMember
+  }
+
+  package "成長支援ユースケース" as GrowthSupportUsecase {
+    usecase "ガクチカを一覧表示する" as listGakuchikas
+    usecase "ガクチカを生成する" as generateGakuchika
+    usecase "ガクチカを更新する" as updateGakuchika
+    usecase "ガクチカを削除する" as deleteGakuchika
+  }
+
+  package "振り返りユースケース" as ReflectionUsecases {
+    usecase "振り返りを作成する" as createReflection
+    usecase "振り返りを一覧表示する" as listReflections
+    usecase "振り返りを更新する" as updateReflection
+    usecase "振り返りを削除する" as deleteReflection
+  }
+
+  package "チーム目標ユースケース" as TeamObjectiveUsecase {
+    usecase "チーム目標を登録する" as createTeamObjective
+    usecase "チーム目標を一覧表示する" as listTeamObjectives
+    usecase "チーム目標を更新する" as updateTeamObjective
+    usecase "チーム目標を削除する" as deleteTeamObjective
+    usecase "チームの進捗を確認する" as getTeamProgressRate
+  }
+
+  package "通知ユースケース" as NotifyUsecase {
+    usecase "進捗を通知する" as NotifyProgress
+    usecase "リマインダーを設定する" as SetTaskReminder
+  }
+  note right of NotifyUsecase
+    slackを想定
+  end note
+
+  package "スケジュール管理ユースケース" as ScheduleUsecase {
+    usecase "タスクの予定を登録する" as RegisterTaskSchedule
+  }
+  note right of ScheduleUsecase
+    Googleカレンダーを想定
+  end note
+
+  package "外部受信ユースケース" as ReceiveUsecase {
+    usecase "外部メッセージを受け取る" as ReceiveExternalMessage
+  }
+  note right of ReceiveUsecase
+    slackを想定
+  end note
+}
+
+UserReader --> login
+UserReader --> logout
+UserReader --> createObjective
+UserReader --> listObjectives
+UserReader --> updateObjective
+UserReader --> deleteObjective
+
+UserReader --> createKeyResult
+UserReader --> listKeyResults
+UserReader --> updateKeyResult
+UserReader --> generateGakuchika
+UserReader --> listGakuchikas
+UserReader --> updateGakuchika
+UserReader --> deleteGakuchika
+UserReader --> createReflection
+UserReader --> listReflections
+UserReader --> updateReflection
+UserReader --> deleteReflection
+UserReader --> NotifyProgress
+UserReader --> SetTaskReminder
+UserReader --> RegisterTaskSchedule
+UserReader --> ReceiveExternalMessage
+
+Reader --> createTeamObjective
+Reader --> listTeamObjectives
+Reader --> updateTeamObjective
+Reader --> deleteTeamObjective
+Reader --> getTeamProgressRate
+
+Admin --> addTeamMember
+Admin --> removeTeamMember
+Admin --> createTeam
+Admin --> listTeams
+Admin --> updateTeam
+Admin --> deleteTeam
+
+
+@enduml

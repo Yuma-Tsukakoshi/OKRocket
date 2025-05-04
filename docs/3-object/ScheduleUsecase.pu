@@ -1,0 +1,52 @@
+@startuml
+title OKRocket ScheduleUsecase オブジェクト図
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+object "(個人目標)" as Objective {
+  タイトル = "英語を話せるようになる"
+  説明 = "TOEICで800点を取る"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+object "(チーム目標)" as TeamObjective {
+  タイトル = "英語を話せるようになる"
+  説明 = "TOEICで800点を取る"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+
+object "(個人成果指標)" as KeyResult {
+  説明 = "毎週100単語覚える"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+
+object "(チーム成果指標)" as TeamKeyResult {
+  説明 = "毎週100単語覚える"
+  アサイン = "山田太郎"
+  開始日 = "2023-01-01"
+  終了日 = "2023-12-31"
+}
+
+note bottom of TeamKeyResult
+  チーム成果指標を策定後、グーグルカレンダーに登録する
+  - 追加のリンクを設置するだけで、必然的に登録はされない
+end note
+note bottom of KeyResult
+  個人成果指標を策定後、グーグルカレンダーに登録する
+  - 追加のリンクを設置するだけで、必然的に登録はされない
+end note
+
+Objective *- KeyResult : "目標は成果指標を複数持つ"
+TeamObjective *-  TeamKeyResult : "目標は成果指標を複数持つ"
+
+
+@enduml
