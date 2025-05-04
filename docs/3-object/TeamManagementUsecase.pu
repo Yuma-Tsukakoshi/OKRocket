@@ -1,0 +1,36 @@
+@startuml
+title OKRocket オブジェクト図
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+object "(ユーザー)" as User {
+  名前 = "山田太郎"
+  大学 = "山田大学"
+  学部 = "情報学部"
+  学年 = 3
+  誕生日 =2022/01/01
+  役割 = "チームリーダー"
+}
+
+object "(チーム)" as Team {
+  名前 = "チームA"
+  説明 = "チームの説明"
+}
+
+User *--* Team : "ユーザーはチームに所属する"
+
+note bottom of User
+  [マネージャー]
+  - チームメンバーを追加・削除できる
+  - チームの役割を変更できる
+  - チームの登録・編集・削除ができる
+end note
+
+@enduml

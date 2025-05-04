@@ -1,0 +1,121 @@
+@startuml
+title OKRocket TeamObjectiveUsecase オブジェクト図
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+object "(チーム)" as Team {
+  名前 = "チームA"
+  説明 = "チームの説明"
+}
+
+frame "チーム目標1" as ObjectiveFrame1 {
+  object "(目標)" as Objective1 {
+    タイトル = "英語を話せるようになる"
+    説明 = "TOEICで800点を取る"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
+  }
+
+  object "(チーム振り返り)" as Reflection1 {
+    タイトル = "英語力向上"
+    説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+  }
+
+  object "(ガクチカ)" as Gakutika1 {
+    タイトル = "英語力向上"
+    説明 = "頑張ったことは...\nぶつかった壁は...\nどのように解決したか..."
+  }
+
+  object "(チーム成果指標)" as KeyResult1 {
+    説明 = 毎週100単語覚える
+    アサイン = "ユーザ(山田太郎)"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
+  }
+}
+
+frame "チーム目標2" as ObjectiveFrame2 {
+  object "(目標)" as Objective2 {
+    タイトル = "英語を話せるようになる"
+    説明 = "TOEICで800点を取る"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
+  }
+
+  object "(チーム振り返り)" as Reflection2 {
+    タイトル = ""
+    説明 = ""
+  }
+
+  object "(ガクチカ)" as Gakutika2 {
+    タイトル = ""
+    説明 = ""
+  }
+
+  object "(チーム成果指標)" as KeyResult2 {
+    説明 = 毎週100単語覚える
+    アサイン = "ユーザ(山田太郎)"
+    開始日 = "2023-01-01"
+    終了日 = "2023-12-31"
+  }
+}
+
+
+object "(ステータス)" as Status {
+  名前 = "進行中"
+}
+Status - KeyResult1 : includes >
+note left of KeyResult1
+  ステータスを管理: 未着手/進行中/完了/期限超過 (VO)
+
+  チーム目標の中でアサインが入っているものは、
+  個人目標一覧の方にも反映されるような設計にする
+end note
+
+
+
+Status - Objective1 : includes >
+note right of Objective1
+  成果指標タスクに合わせてステータス変化
+  - 全て未着手 or 成果指標がない: 未着手
+  - 1つ以上進行中: 進行中
+  - 全て完了: 完了
+end note
+
+Objective1 -down- Team
+Objective2 -down- Team
+
+Objective1 "1" *-up- "*"  KeyResult1
+note right of Objective1
+  チーム目標の削除権限はチームリーダーのみ
+end note
+note right of KeyResult1
+  チームの成果指標の編集・削除権限は、所属メンバー全員が可能
+end note
+
+
+Objective1 "1" o---"0..1" Reflection1
+Objective1 "1" <..."0..1" Gakutika1 : uses <
+note right of Gakutika1
+  目標と振り返りからガクチカが生成される
+
+  目標の終了期限が来たら作成はできるようにする
+  ただし、振り返りがない場合は生成されない
+end note
+
+Objective2 "1" *-up- "*"  KeyResult2
+Objective2 "1" o---"0..1" Reflection2
+Objective2 "1" <..."0..1" Gakutika2 : uses <
+note right of Gakutika2
+  振り返りがない場合
+  ガクチカは生成されない
+end note
+
+@enduml
