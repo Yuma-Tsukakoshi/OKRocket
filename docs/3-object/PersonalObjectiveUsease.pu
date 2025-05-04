@@ -89,7 +89,7 @@ Objective2 -down- User
 
 Objective1 "1" *-up- "*"  KeyResult1
 Objective1 "1" o---"0..1" Reflection1
-Objective1 "1" <..."0..1" Gakutika1 : uses <
+Reflection1 "1" <..."1" Gakutika1 : uses <
 note right of Gakutika1
   目標と振り返りからガクチカが生成される
 
@@ -118,7 +118,7 @@ end note
 
 Objective2 "1" *-up- "*"  KeyResult2
 Objective2 "1" o---"0..1" Reflection2
-Objective2 "1" <..."0..1" Gakutika2 : uses <
+Reflection2 "1" <..."1" Gakutika2 : uses <
 note right of Gakutika2
   振り返りがない場合
   ガクチカは生成されない

@@ -1,5 +1,5 @@
 @startuml
-title OKRocket オブジェクト図
+title OKRocket TeamManagementUsecase オブジェクト図
 
 left to right direction
 
@@ -16,7 +16,11 @@ object "(ユーザー)" as User {
   学部 = "情報学部"
   学年 = 3
   誕生日 =2022/01/01
-  役割 = "チームリーダー"
+}
+
+object "役割" as Role {
+  名前 = "マネージャー"
+  説明 = "チームの管理を行う役割"
 }
 
 object "(チーム)" as Team {
@@ -25,6 +29,11 @@ object "(チーム)" as Team {
 }
 
 User *--* Team : "ユーザーはチームに所属する"
+User -- Role : "ユーザーは役割を持つ"
+note bottom of Role
+  Roleの権限以下のユースケースを実行できる
+  Admin > Reader > Menber
+end note
 
 note bottom of User
   [マネージャー]

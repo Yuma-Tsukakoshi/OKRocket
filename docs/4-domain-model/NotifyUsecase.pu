@@ -1,0 +1,58 @@
+@startuml
+title OKRocket ドメインモデル図 - 通知ユースケース
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+'====== エンティティ ======
+object "個人目標 (PersonalObjective)" as Objective {
+  タイトル (title)
+  説明 (description)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+object "チーム目標 (TeamObjective)" as TeamObjective {
+  タイトル (title)
+  説明 (description)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+object "成果指標 (KeyResult)" as KeyResult {
+  説明 (description)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+object "チーム成果指標 (TeamKeyResult)" as TeamKeyResult {
+  説明 (description)
+  アサイン (assignee)
+  開始日 (startDate)
+  終了日 (endDate)
+}
+
+'====== 関連（多重度と関係の種類） ======
+Objective "1" *-- "*" KeyResult
+TeamObjective "1" *-- "*" TeamKeyResult
+
+'====== note(ドメインルールの定義) ======
+note right of TeamKeyResult
+  Slack通知の送信条件（個人/チーム共通）:
+  - 目標が作成されたとき
+  - 成果指標の開始日 && ステータスが「未着手」のとき
+  - 成果指標の終了日から:
+    - 1週間前 / 3日前 / 1日前
+      ※ ただしステータスが「完了」ではない場合に限る
+
+  Slack通知送信先は任意でチャンネルを選択
+  → 選択後、自動で通知が送られる
+end note
+
+@enduml

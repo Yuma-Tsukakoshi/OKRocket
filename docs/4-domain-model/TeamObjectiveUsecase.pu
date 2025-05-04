@@ -1,0 +1,87 @@
+@startuml
+title OKRocket ドメインモデル図 - チーム目標ユースケース
+
+left to right direction
+
+skinparam object {
+  BackgroundColor #ffffff
+  BorderColor #7a7adb
+  FontColor #000000
+  BorderThickness 2
+}
+
+'====== エンティティ ======
+object "チーム" as Team {
+  名前 (name)
+  説明 (description)
+}
+
+frame "チーム目標集約" as ObjectiveFrame {
+  object "目標" as Objective {
+    タイトル (title)
+    説明 (description)
+    開始日 (startDate)
+    終了日 (endDate)
+  }
+
+  object "成果指標" as KeyResult {
+    説明 (description)
+    アサイン (assignee)
+    開始日 (startDate)
+    終了日 (endDate)
+  }
+
+  object "振り返り" as Reflection {
+    タイトル (title)
+    説明 (description)
+  }
+
+  object "ガクチカ" as Gakutika {
+    タイトル (title)
+    説明 (description)
+  }
+}
+
+object "ステータス" as Status {
+  名前 (name)
+}
+
+'====== 関連（多重度と関係の種類） ======
+Team "1" *-- "*" Objective
+Objective "1" *-- "*" KeyResult
+Objective "1" o-- "0..1" Reflection 
+KeyResult "1" -- "1" Status
+Objective "1" -- "1" Status
+Reflection "1" <.. "1" Gakutika
+
+'====== note(ドメインルールの定義) ======
+note bottom of Status
+  ステータス種別:
+  - 未着手
+  - 進行中
+  - 完了
+  - 期限超過
+end note
+
+note right of Gakutika
+  ● 生成条件：
+    - ステータスが「完了」
+    - 振り返りが存在すること
+  ● 表示：
+    - チームのページで共有
+  ● 編集：
+    - 作成後は編集不可
+    - 複製して個人用として編集可
+  ● 削除：
+    - チームリーダーが削除可能
+end note
+
+note right of Objective
+  ● チーム目標の削除はリーダーのみ許可
+end note
+
+note right of KeyResult
+  ● チームメンバーであれば編集・削除可能
+end note
+
+@enduml
