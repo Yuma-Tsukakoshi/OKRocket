@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# 自動整形を先に実行
+./gradlew ktlintFormat
+
+# 再ステージ（整形されたファイルを add し直す）
+git add .
+
+# チェックを実行（整形しても直らないミスがある場合に検出）
+./gradlew ktlintCheck
+if [ $? -ne 0 ]; then
+  echo "❌ Ktlint check failed. Please fix remaining style errors before committing."
+  exit 1
+fi
+
+echo "✅ Ktlint passed. Proceeding with commit."
