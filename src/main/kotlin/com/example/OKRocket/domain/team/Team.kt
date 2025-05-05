@@ -10,9 +10,3 @@ class Team(
     /** チームのメンバー */
     val members: MutableList<User>
 )
-
-interface TeamRepository {
-    fun findById(id: Long): Team?
-    fun save(team: Team): Team
-    fun delete(team: Team)
-}
