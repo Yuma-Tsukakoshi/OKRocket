@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class OkRocketApplication
 
 fun main(args: Array<String>) {
-	runApplication<OkRocketApplication>(*args)
+    runApplication<OkRocketApplication>(*args)
 }
