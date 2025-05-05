@@ -18,8 +18,17 @@ case "$1" in
   check)
     ./gradlew check
     ;;
+  lint)
+    ./gradlew ktlintCheck
+    ;;
+  format)
+    ./gradlew ktlintFormat
+    ;;
+  detekt)
+    ./gradlew detekt
+    ;;
   *)
-    echo "Usage: $0 {build|run|clean|check}"
+    echo "Usage: $0 {build|run|clean|check|lint|format|detekt}"
     exit 1
     ;;
 esac
