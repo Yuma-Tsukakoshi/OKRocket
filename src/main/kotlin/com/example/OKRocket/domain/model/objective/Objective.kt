@@ -1,7 +1,7 @@
-import com.example.OKRocket.domain.gakuchika.Gakuchika
-import com.example.OKRocket.domain.keyresult.KeyResult
-import com.example.OKRocket.domain.reflection.Reflection
-import com.example.OKRocket.domain.status.Status
+import com.example.OKRocket.domain.model.gakuchika.Gakuchika
+import com.example.OKRocket.domain.model.keyresult.KeyResult
+import com.example.OKRocket.domain.model.reflection.Reflection
+import com.example.OKRocket.domain.model.status.Status
 import java.time.LocalDateTime
 
 class Objective(

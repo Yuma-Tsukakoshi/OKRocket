@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain.reflection
+package com.example.OKRocket.domain.model.reflection
 
 class Reflection(
     /** 振り返りのタイトル */

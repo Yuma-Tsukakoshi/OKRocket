@@ -1,6 +1,6 @@
-package com.example.OKRocket.domain.team
+package com.example.OKRocket.domain.model.team
 
-import com.example.OKRocket.domain.user.User
+import com.example.OKRocket.domain.model.user.User
 
 class Team(
     /** チーム名 */

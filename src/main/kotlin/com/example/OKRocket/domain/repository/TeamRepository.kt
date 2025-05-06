@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain.team
+package com.example.OKRocket.domain.model.team
 
 interface TeamRepository {
     fun findById(id: Long): Team?

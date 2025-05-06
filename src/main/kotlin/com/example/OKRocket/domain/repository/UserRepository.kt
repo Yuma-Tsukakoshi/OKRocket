@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain.user
+package com.example.OKRocket.domain.model.user
 
 interface UserRepository {
     fun findById(id: Long): User?

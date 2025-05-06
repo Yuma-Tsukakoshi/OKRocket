@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain.gakuchika
+package com.example.OKRocket.domain.model.gakuchika
 
 class Gakuchika(
     /** ガクチカのタイトル */

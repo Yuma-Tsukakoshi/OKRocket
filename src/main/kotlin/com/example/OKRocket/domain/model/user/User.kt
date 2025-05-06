@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain.user
+package com.example.OKRocket.domain.model.user
 
 import java.time.LocalDateTime
 
