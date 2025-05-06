@@ -24,11 +24,8 @@ case "$1" in
   format)
     ./gradlew ktlintFormat
     ;;
-  detekt)
-    ./gradlew detekt
-    ;;
   *)
-    echo "Usage: $0 {build|run|clean|check|lint|format|detekt}"
+    echo "Usage: $0 {build|run|clean|check|lint|format}"
     exit 1
     ;;
 esac
