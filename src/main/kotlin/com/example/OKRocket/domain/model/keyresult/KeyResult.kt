@@ -1,6 +1,5 @@
 package com.example.OKRocket.domain.model.keyresult
 import com.example.OKRocket.domain.model.status.Status
-
 import java.time.LocalDateTime
 
 class KeyResult(
