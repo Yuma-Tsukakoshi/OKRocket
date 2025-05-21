@@ -1,16 +1,14 @@
 package com.example.OKRocket.domain.model.keyresult
+
 import com.example.OKRocket.domain.model.status.Status
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class KeyResult(
-    /** 成果指標のタイトル */
-    val name: String,
-    /** 成果指標の説明 */
+    val id: String,
     val description: String,
-    /** 成果指標のステータス */
+    val startDate: LocalDate,
+    val endDate: LocalDate,
     val status: Status,
-    /** 成果指標の開始日 */
-    val startDate: LocalDateTime,
-    /** 成果指標の終了日 */
-    val endDate: LocalDateTime
+    val objectiveId: String,
+    val assignee: String?
 )

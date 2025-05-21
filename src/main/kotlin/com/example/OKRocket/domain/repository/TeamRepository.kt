@@ -1,4 +1,7 @@
-package com.example.OKRocket.domain
+package com.example.OKRocket.domain.repository
+
+import com.example.OKRocket.domain.model.team.Team
+import com.example.OKRocket.domain.model.teammembership.TeamMembership
 
 interface TeamRepository {
     fun findById(id: String): Team?

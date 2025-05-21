@@ -1,35 +1,27 @@
-import com.example.OKRocket.domain.model.gakuchika.Gakuchika
+package com.example.OKRocket.domain.model.objective
+
 import com.example.OKRocket.domain.model.keyresult.KeyResult
-import com.example.OKRocket.domain.model.reflection.Reflection
 import com.example.OKRocket.domain.model.status.Status
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class Objective(
-    /** 目標タイトル */
-    val name: String,
-    /** 目標の説明 */
+    val id: String,
+    val title: String,
     val description: String,
-    /** 目標のステータス */
+    val startDate: LocalDate,
+    val endDate: LocalDate,
     val status: Status,
-    /** 目標の開始日 */
-    val startDate: LocalDateTime,
-    /** 目標の終了日 */
-    val endDate: LocalDateTime,
-    /** 目標の成果指標 */
-    val keyResults: MutableList<KeyResult>,
-    /** 目標の振り返り */
-    val reflection: Reflection?,
-    /** 目標のガクチカ */
-    val gakuchika: Gakuchika?
+    val type: ObjectiveType,
+    val keyResults: List<KeyResult>
 )
-interface ObjectiveRepository {
-    fun findById(id: Long): Objective?
-    fun save(objective: Objective): Objective
-    fun delete(objective: Objective)
-    fun scheduleKeyResult(keyResult: KeyResult): Boolean
-    fun notify(
-        objective: Objective,
-        keyResult: KeyResult,
-        today: LocalDateTime
-    ): Boolean
+
+enum class Status {
+    NOT_STARTED,
+    IN_PROGRESS,
+    COMPLETED
+}
+
+enum class ObjectiveType {
+    PERSONAL,
+    TEAM
 }

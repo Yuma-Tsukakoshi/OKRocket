@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain
+package com.example.OKRocket.domain.model.role
 
 enum class Role {
     ADMIN,

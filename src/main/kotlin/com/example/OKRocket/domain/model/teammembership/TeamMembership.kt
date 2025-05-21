@@ -1,8 +1,8 @@
-package com.example.OKRocket.domain
+package com.example.OKRocket.domain.model.teammembership
 
+import com.example.OKRocket.domain.model.role.Role
 import java.time.LocalDateTime
-
-data class TeamMembership(
+class TeamMembership(
     val id: String,
     val userId: String,
     val teamId: String,
