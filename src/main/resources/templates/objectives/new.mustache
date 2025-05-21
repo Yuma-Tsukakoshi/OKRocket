@@ -1,0 +1,143 @@
+{{<layout/default}}
+{{$title}}目標作成{{/title}}
+{{$content}}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">新規目標作成</h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">目標と成果指標を設定してください</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <form id="objectiveForm" class="space-y-6">
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">目標タイトル</label>
+                <div class="mt-1">
+                    <input type="text" name="title" id="title" required
+                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                </div>
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">目標の説明</label>
+                <div class="mt-1">
+                    <textarea name="description" id="description" rows="3" required
+                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="startDate" class="block text-sm font-medium text-gray-700">開始日</label>
+                    <div class="mt-1">
+                        <input type="date" name="startDate" id="startDate" required
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="endDate" class="block text-sm font-medium text-gray-700">終了日</label>
+                    <div class="mt-1">
+                        <input type="date" name="endDate" id="endDate" required
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-medium text-gray-900">成果指標</h4>
+                <div id="keyResults" class="mt-2 space-y-4">
+                    <div class="key-result">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <input type="text" name="keyResults[0][description]" placeholder="成果指標の説明" required
+                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                            </div>
+                            <button type="button" onclick="removeKeyResult(this)" class="ml-2 text-red-600 hover:text-red-800">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="addKeyResult()"
+                    class="mt-2 inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    成果指標を追加
+                </button>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit"
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    作成
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let keyResultCount = 1;
+
+function addKeyResult() {
+    const keyResults = document.getElementById('keyResults');
+    const newKeyResult = document.createElement('div');
+    newKeyResult.className = 'key-result';
+    newKeyResult.innerHTML = `
+        <div class="flex items-center justify-between">
+            <div class="flex-1">
+                <input type="text" name="keyResults[${keyResultCount}][description]" placeholder="成果指標の説明" required
+                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+            </div>
+            <button type="button" onclick="removeKeyResult(this)" class="ml-2 text-red-600 hover:text-red-800">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    `;
+    keyResults.appendChild(newKeyResult);
+    keyResultCount++;
+}
+
+function removeKeyResult(button) {
+    button.closest('.key-result').remove();
+}
+
+document.getElementById('objectiveForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        startDate: formData.get('startDate'),
+        endDate: formData.get('endDate'),
+        userId: '1', // TODO: 実際のユーザーIDを設定
+        keyResults: Array.from(formData.getAll('keyResults[][description]')).map(description => ({
+            description,
+            startDate: formData.get('startDate'),
+            endDate: formData.get('endDate')
+        }))
+    };
+
+    try {
+        const response = await fetch('/api/personal-objectives', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            window.location.href = '/';
+        } else {
+            alert('目標の作成に失敗しました');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('目標の作成に失敗しました');
+    }
+});
+</script>
+{{/content}}
+{{/layout/default}} 
