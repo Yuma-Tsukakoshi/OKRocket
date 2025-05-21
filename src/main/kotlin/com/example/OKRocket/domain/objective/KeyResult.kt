@@ -9,5 +9,5 @@ data class KeyResult(
     val endDate: LocalDate,
     val status: Status,
     val objectiveId: String,
-    val assignee: String? = null
+    val assignee: String?
 )

@@ -8,12 +8,13 @@ data class Team(
 )
 
 data class TeamMember(
+    val id: String,
     val userId: String,
-    val role: Role
+    val role: Role,
+    val joinedAt: String
 )
 
 enum class Role {
     OWNER,
-    ADMIN,
     MEMBER
 }

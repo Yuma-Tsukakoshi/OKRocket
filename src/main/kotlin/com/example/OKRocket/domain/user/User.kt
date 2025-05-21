@@ -2,12 +2,14 @@ package com.example.OKRocket.domain.user
 
 data class User(
     val id: String,
-    val name: String,
     val email: String,
+    val name: String,
     val profile: UserProfile
 )
 
 data class UserProfile(
-    val bio: String,
+    val id: String,
+    val userId: String,
+    val bio: String?,
     val avatarUrl: String?
 )

@@ -5,4 +5,7 @@ interface TeamRepository {
     fun findByUserId(userId: String): List<Team>
     fun save(team: Team): Team
     fun delete(id: String)
+    fun findMembershipsByTeamId(teamId: String): List<TeamMember>
+    fun saveMembership(membership: TeamMember): TeamMember
+    fun deleteMembership(id: String)
 }

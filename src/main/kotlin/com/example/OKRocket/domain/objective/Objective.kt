@@ -1,7 +1,6 @@
 package com.example.OKRocket.domain.objective
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class Objective(
     val id: String,
@@ -11,7 +10,7 @@ data class Objective(
     val endDate: LocalDate,
     val status: Status,
     val type: ObjectiveType,
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val keyResults: List<KeyResult>
 )
 
 enum class Status {
