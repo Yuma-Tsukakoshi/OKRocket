@@ -1,4 +1,4 @@
-package com.example.OKRocket.domain.status
+package com.example.OKRocket.domain.model.status
 
 enum class Status {
     /** 未着手 */

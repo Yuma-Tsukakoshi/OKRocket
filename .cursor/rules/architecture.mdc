@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+layers:
+  - name: domain
+    description: ドメイン知識とビジネスルールを表現。エンティティ、値オブジェクト、ドメインサービス、リポジトリのインターフェースを含む。
+  - name: usecase
+    description: アプリケーションの振る舞いを表現。ユースケースクラス、DTO、クエリサービスのインターフェースを含む。
+  - name: infra
+    description: データベースや外部サービスとの連携。リポジトリ実装、APIクライアント、データソースとの橋渡し。
+  - name: presentation
+    description: ユーザーや外部とのインタフェース。WebControllerやAPIエンドポイントなどを含む。
+
+rules:
+  - from: presentation
+    to: usecase
+
+  - from: usecase
+    to: domain
+
+  - from: infra
+    to: domain
+    allow: implement_interfaces # domain層のインターフェースのみ依存を許容
+
+  - from: presentation
+    to: domain
+    allow: none
+
+  - from: usecase
+    to: infra
+    allow: none
