@@ -8,7 +8,5 @@ class KeyResult(
     val description: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
-    val status: Status,
-    val objectiveId: String,
-    val assignee: String?
+    val status: Status
 )
